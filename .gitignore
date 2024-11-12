@@ -1,0 +1,10 @@
+# User files
+.vs/
+*.csproj.user
+
+# Build folder
+_build_/
+
+# Workbooks folder
+Workbooks/*
+!Workbooks/*.xls?

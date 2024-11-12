@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<customUI xmlns='http://schemas.microsoft.com/office/2009/07/customui'
+          onLoad='OnRibbonLoad'
+>
+  <ribbon>
+    <tabs>
+      <tab id='XLSQL' label='XLSQL' getVisible='TabGetVisible'>
+        <group id='XLSQL.Connections' label='Connections'>
+          <button id='XLSQL.Connections.Open' onAction='OnCnxButton' label='Open Connection' size='large' imageMso='GetPowerQueryDataFromOracleDatabase' getScreentip='OnGetTitle' getSupertip='OnGetDescription' />
+          <button id='XLSQL.Connections.NewMem' onAction='OnCnxButton' label='New Memory DB' imageMso='GetPowerQueryDataFromSalesforceObjects' getScreentip='OnGetTitle' getSupertip='OnGetDescription' />
+          <button id='XLSQL.Connections.NewFile' onAction='OnCnxButton' label='New File DB' imageMso='FileNewDefault' getScreentip='OnGetTitle' getSupertip='OnGetDescription' />
+          <button id='XLSQL.Connections.Close' onAction='OnCnxButton' label='Close Connection' imageMso='PrintPreviewClose' getScreentip='OnGetTitle' getSupertip='OnGetDescription' />
+        </group>
+        <group id='XLSQL.Database' label='Database'>
+          <button id='XLSQL.Database.NewTable' onAction='OnDbButton' label='New Range Table' size='large' imageMso='TableInsertExcel' getScreentip='OnGetTitle' getSupertip='OnGetDescription' />
+          <button id='XLSQL.Database.FreezeTbl' onAction='OnDbButton' label='Freeze Table' imageMso='FreezePanes' getScreentip='OnGetTitle' getSupertip='OnGetDescription' />
+          <button id='XLSQL.Database.UnfreezeTbl' onAction='OnDbButton' label='Unfreeze Table' imageMso='TableStyleClear' getScreentip='OnGetTitle' getSupertip='OnGetDescription' />
+          <button id='XLSQL.Database.RefreshTbl' onAction='OnDbButton' label='Refresh Table' imageMso='Refresh' getScreentip='OnGetTitle' getSupertip='OnGetDescription' />
+          <separator id='XLSQL.Database.sep01' />
+          <button id='XLSQL.Database.QueryEd' onAction='OnDbButton' label='Query Editor' size='large' imageMso='CodeEdit' getScreentip='OnGetTitle' getSupertip='OnGetDescription' />
+          <separator id='XLSQL.Database.sep02' />
+          <button id='XLSQL.Database.SqlHelp' onAction='OnDbButton' label='SQL Help' size='large' imageMso='Help' getScreentip='OnGetTitle' getSupertip='OnGetDescription' />
+        </group>
+        <group id='XLSQL.About' label='About'>
+          <button id='XLSQL.About.About' onAction='OnAbout' label='About' size='large' imageMso='WhatsNewRecentUpdates' />
+        </group>
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <PropertyGroup>
+    <CleanDependsOn>$(CleanDependsOn);Restore;</CleanDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GitCMD Condition="'$(GitCMD)' == ''" >C:\Programs\PortableGit\cmd\git.exe</GitCMD>
+    <ReleaseBase Condition="'$(ReleaseBase)' == ''" >20000</ReleaseBase>
+  </PropertyGroup>
+
+  <Target Name="GenerateVersionInfo" BeforeTargets="GetAssemblyVersion;InitializeSourceControlInformation">
+
+    <PropertyGroup>
+      <IsInsideWorkTree>false</IsInsideWorkTree>
+    </PropertyGroup>
+
+    <Exec Command="$(GitCMD) rev-parse -q --is-inside-work-tree"
+          IgnoreExitCode="true"
+          ConsoleToMSBuild="true"
+          StandardOutputImportance="normal"
+          StandardErrorImportance="low"
+    >
+      <Output TaskParameter="ConsoleOutput" PropertyName="IsInsideWorkTree" />
+    </Exec>
+
+    <CallTarget Condition="'$(IsInsideWorkTree)' == 'true'" Targets="DoGenerateVersionInfo" />
+
+  </Target>
+
+  <Target Name="DoGenerateVersionInfo">
+    <!--
+      The 'revision' number is based on the 'git rev-list' command output. On the release commit,
+      $(VersionPrefix) (i.e. major.minor.build) is set, but $(VersionSuffix) (i.e. dev, rc, etc.)
+      and $(BaseCommitForCount) are empty, so 'revision' is equal to $(ReleaseBase), i.e. 20000.
+      On the rel-branch that starts from the release commit, $(VersionSuffix) is emprty and
+      $(BaseCommitForCount) is the release commit, so 'revision' is greater than $(ReleaseBase).
+      On the master branch, after the release commit, $(VersionPrefix) and $(VersionSuffix) are
+      set to new semantic version values and $(BaseCommitForCount) is set to the previous release
+      commit, so the 'revision' number is greater than 0, but likely less than $(ReleaseBase).
+      An '*' is put in front of the HEAD commit hash if the worktree is dirty.
+    -->
+
+    <PropertyGroup>
+      <CommitCount>0</CommitCount>
+    </PropertyGroup>
+
+    <Exec Condition="'$(BaseCommitForCount)' != ''"
+          Command="$(GitCMD) rev-list --count $(BaseCommitForCount)..HEAD"
+          ConsoleToMSBuild="true"
+          StandardOutputImportance="normal"
+    >
+      <Output TaskParameter="ConsoleOutput" PropertyName="CommitCount" />
+    </Exec>
+
+    <Exec Command="$(GitCMD) branch --show-current"
+      ConsoleToMSBuild="true"
+      StandardOutputImportance="normal"
+    >
+      <Output TaskParameter="ConsoleOutput" PropertyName="BranchName" />
+    </Exec>
+
+    <Exec Command="$(GitCMD) rev-parse HEAD"
+          ConsoleToMSBuild="true"
+          StandardOutputImportance="normal"
+    >
+      <Output TaskParameter="ConsoleOutput" PropertyName="SourceRevisionId" />
+    </Exec>
+
+    <Exec Command="$(GitCMD) diff --quiet &amp;&amp; echo clean"
+          IgnoreExitCode="true"
+          ConsoleToMSBuild="true"
+          StandardOutputImportance="normal"
+    >
+      <Output TaskParameter="ConsoleOutput" PropertyName="DirtyFlag" />
+    </Exec>
+
+    <PropertyGroup>
+      <CommitCount Condition="'$(VersionSuffix)' == ''">$([MSBuild]::Add($(ReleaseBase), $(CommitCount)))</CommitCount>
+      <FileVersion>$(VersionPrefix).$(CommitCount)</FileVersion>
+      <BranchName Condition="'$(BranchName)' == 'master' Or '$(BranchName)' == 'main'"></BranchName>
+      <VersionSuffix Condition="'$(VersionSuffix)' != '' And '$(BranchName)' != ''">$(VersionSuffix).$(BranchName)</VersionSuffix>
+      <VersionSuffix Condition="'$(VersionSuffix)' == '' And '$(BranchName)' != ''">$(BranchName)</VersionSuffix>
+      <VersionSuffix Condition="'$(VersionSuffix)' != ''">-$(VersionSuffix)</VersionSuffix>
+      <Version>$(VersionPrefix)$(VersionSuffix)</Version>
+      <SourceRevisionId Condition="'$(DirtyFlag)' == ''">*$(SourceRevisionId)</SourceRevisionId>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <AssemblyMetadata Include="SourceRevisionId" Value="$(SourceRevisionId)" />
+    </ItemGroup>
+
+  </Target>
+
+</Project>

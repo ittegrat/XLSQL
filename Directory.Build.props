@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <PropertyGroup>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <BuildRoot>$(SolutionDir)_build_\</BuildRoot>
+    <BuildVariant>$(Platform)_$(Configuration)\</BuildVariant>
+    <OutputPath>$(BuildRoot)$(BuildVariant)$(MSBuildProjectName)\</OutputPath>
+    <IntermediateOutputPath>$(OutputPath)obj\</IntermediateOutputPath>
+    <BaseOutputPath>$(OutputPath)</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(IntermediateOutputPath)</BaseIntermediateOutputPath>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(BuildRoot)**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,6 @@
+<DnaLibrary Name="XLSQL" Language="C#" RuntimeVersion="v4.0">
+  <ExternalLibrary Path="XLSQL.dll" Pack="true" ExplicitExports="true" />
+  <Reference Path="ICSharpCode.AvalonEdit.dll" Pack="false" />
+  <Reference Path="NLog.dll" Pack="false" />
+  <Reference Path="System.Data.SQLite.dll" Pack="false" />
+</DnaLibrary>

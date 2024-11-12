@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+
+  <PropertyGroup>
+    <VersionPrefix>0.2.0</VersionPrefix>
+    <VersionSuffix></VersionSuffix>
+    <BaseCommitForCount></BaseCommitForCount>
+    <RepositoryUrl>https://github.com/ittegrat/XLSQL</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>net48</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <ExcelDnaBuild32>true</ExcelDnaBuild32>
+    <DnaSuffix32>32</DnaSuffix32>
+    <DnaSuffix64>64</DnaSuffix64>
+  </PropertyGroup>
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+  <Import Project="$(SolutionDir)..\_libs_\ExcelDna\ExcelDna.targets" />
+
+  <PropertyGroup>
+    <AssemblySearchPaths>$(AssemblySearchPaths);{GAC}</AssemblySearchPaths>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="office" />
+    <Reference Include="Microsoft.Office.Interop.Excel" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Addin\Ribbon.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+    <PackageReference Include="NLog" Version="5.3.4" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
+  </ItemGroup>
+
+</Project>

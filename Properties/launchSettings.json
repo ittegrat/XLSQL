@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "Excel": {
+      "commandName": "Executable",
+      "executablePath": "$(StartProgram)",
+      "commandLineArgs": "/X $(TargetDir)$(XllBaseName).xll $(TestWorkbook)",
+      "workingDirectory": "$(TestRoot)",
+      "environmentVariables": {
+        "EXCELDNA_DIAGNOSTICS_SOURCE_LEVEL": "All",
+        "EXCELDNA_DIAGNOSTICS_FILE_LEVEL": "Information",
+        "EXCELDNA_DIAGNOSTICS_FILE_NAME": "$(TargetDir)ExcelDna.log",
+      }
+    },
+  }
+}
