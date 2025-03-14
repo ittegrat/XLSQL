@@ -43,7 +43,10 @@ namespace XLSQL
       var headers = bool.Parse(args[8]);
       if (headers) {
         var xlref = new ExcelReference(rowFirst, rowFirst, columnFirst, columnLast, sheetId);
-        head = (object[,])xlref.GetValue();
+        if (columnFirst == columnLast)
+          head = new object[,] { { xlref.GetValue() } };
+        else
+          head = (object[,])xlref.GetValue();
         ++rowFirst;
       }
 
@@ -77,8 +80,11 @@ namespace XLSQL
     public virtual XLRefTableCursor GetCursor() {
       CheckDisposed();
       return new XLRefTableCursor(this,
-        data ??
-        (object[,])new ExcelReference(rowFirst, rowLast, columnFirst, columnLast, sheetId).GetValue()
+        data ?? (
+          (rowFirst == rowLast && columnFirst == columnLast)
+          ? new object[,] { { new ExcelReference(rowFirst, rowLast, columnFirst, columnLast, sheetId).GetValue() } }
+          : (object[,])new ExcelReference(rowFirst, rowLast, columnFirst, columnLast, sheetId).GetValue()
+        )
       );
     }
     public virtual void Update(XLRefModule.UpdateCommand uc) {

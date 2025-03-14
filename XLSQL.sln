@@ -8,7 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XSDs", "XSDs", "{1034AA16-4949-42F1-8673-526EB4C64A0B}"
 	ProjectSection(SolutionItems) = preProject
 		..\_extlibs_\MsOffice\customui14.xsd = ..\_extlibs_\MsOffice\customui14.xsd
-		..\_extlibs_\NLog\NLog4715.xsd = ..\_extlibs_\NLog\NLog4715.xsd
+		..\_extlibs_\NLog\NLog.v540.xsd = ..\_extlibs_\NLog\NLog.v540.xsd
 	EndProjectSection
 EndProject
 Global
